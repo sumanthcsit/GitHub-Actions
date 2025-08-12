@@ -8,7 +8,7 @@ on:
 env:
 #  KUBECONFIG: ${{ secrets.KUBECONFIG }}
   SONAR_TOKEN: ${{ secrets.SONAR_TKN }}
-  SONAR_HOST_URL: http://51.20.120.233:9000
+#  SONAR_HOST_URL: http://51.20.120.233:9000
 
 jobs:
   build:
@@ -28,7 +28,14 @@ jobs:
       working-directory: java-maven-sonar-argocd-helm-k8s/spring-boot-app
 
     - name: Perform analysis on Sonar Qube
-      uses: SonarSource/sonarqube-scan-action@v5.3.0
+#      uses: SonarSource/sonarqube-scan-action@v5.3.0
+      uses: sonarsource/sonarcloud-github-action@v1
+      with:
+        sonarcloud.organization: Test
+        sonarcloud.projectKey: Test
+        sonarcloud.projectName: Test
+        sonarcloud.token: ${{ env.SONAR_TKN }}
+        sonarcloud.scannerVersion: "4.2.0.1873"
 
 #  deploy:
 #    needs: build
