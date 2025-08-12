@@ -1,0 +1,45 @@
+name: End to End CI/CD workflow for Java Applicaton with Maven, Sonar and k8s Intergation
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+#  KUBECONFIG: ${{ secrets.KUBECONFIG }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TKN }}
+  SONAR_HOST_URL: http://51.20.120.233:9000
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Java jdk setup
+      uses: actions/setup-java@v1
+      with:
+        java-version: 12
+
+    - name: maven target # change accordingly
+      run: mvn clean install
+
+    - name: Perform analysis on Sonar Qube
+      uses: SonarSource/sonarqube-scan-action@v2.4.0
+
+#  deploy:
+#    needs: build
+#    runs-on: ubuntu-latest
+
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v2
+#
+#    - name: Deploy to k8s
+#      uses: stefanzweifel/k8s-action@v2.0.0
+#      with:
+#        args: apply -f kubernetes/
+#      env:
+#        KUBECONFIG: ${{ env.KUBECONFIG }}
