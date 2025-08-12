@@ -25,6 +25,7 @@ jobs:
 
     - name: maven target # change accordingly
       run: mvn clean install
+      working-directory: java-maven-sonar-argocd-helm-k8s/spring-boot-app
 
     - name: Perform analysis on Sonar Qube
       uses: SonarSource/sonarqube-scan-action@v5.3.0
