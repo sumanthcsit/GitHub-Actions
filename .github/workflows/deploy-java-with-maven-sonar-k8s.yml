@@ -27,7 +27,7 @@ jobs:
       run: mvn clean install
 
     - name: Perform analysis on Sonar Qube
-      uses: SonarSource/sonarqube-scan-action@v7.2.0.5079
+      uses: SonarSource/sonarqube-scan-action@v5.3.0
 
 #  deploy:
 #    needs: build
